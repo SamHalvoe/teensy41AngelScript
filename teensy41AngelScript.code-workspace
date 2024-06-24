@@ -1,0 +1,23 @@
+{
+	"folders": [
+		{
+			"path": "."
+		}
+	],
+	"settings": {
+		"files.associations": {
+			"string": "cpp",
+			"ostream": "cpp",
+			"random": "cpp",
+			"unordered_map": "cpp",
+			"array": "cpp",
+			"string_view": "cpp",
+			"initializer_list": "cpp",
+			"utility": "cpp",
+			"*.tcc": "cpp",
+			"deque": "cpp",
+			"vector": "cpp"
+		},
+		"editor.tabSize": 2
+	}
+}
