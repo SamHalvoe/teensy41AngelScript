@@ -2,6 +2,7 @@
 
 #include <angelscript.h>
 
+#include "register_arduino.hpp"
 #include "register_arduinoString.hpp"
 
 void MessageCallback(const asSMessageInfo *msg, void *param)
@@ -15,10 +16,9 @@ void MessageCallback(const asSMessageInfo *msg, void *param)
 	Serial.printf("%s (%d, %d) : %s : %s\n", msg->section, msg->row, msg->col, type, msg->message);
 }
 
-void serialPrintln(asIScriptGeneric* in_string)
+void serial_println(asIScriptGeneric* in_string)
 {
-  Serial.print("serialPrintln: ");
-	Serial.println(*static_cast<String*>(in_string->GetArgAddress(0)));
+  Serial.println(*static_cast<String*>(in_string->GetArgAddress(0)));
 }
 
 void setup()
@@ -28,7 +28,6 @@ void setup()
   Serial.println("Serial is up and running (:");
 
   asIScriptEngine* engine = asCreateScriptEngine();
-
   if (engine == nullptr)
 	{
 		Serial.println("Failed to create script engine!");
@@ -42,16 +41,13 @@ void setup()
 		while (true) {}
   }
 
+	register_arduino(engine);
 	register_arduinoString(engine);
 
-  r = engine->RegisterGlobalFunction("void serialPrintln(const String& in)", asFUNCTION(serialPrintln), asCALL_GENERIC);
-  if (r < 0)
-	{
-		Serial.println("RegisterGlobalFunction() failed!");
-		while (true) {}
-	}
+  r = engine->RegisterGlobalFunction("void serial_println(const String& in)", asFUNCTION(serial_println), asCALL_GENERIC);
+  if (r < 0) { Serial.println("RegisterGlobalFunction() failed!"); }
   
-  String angelScript = "void main() { serialPrintln(\"Hello Arduino AngelScript!\"); }";
+  String angelScript = "void main() { serial_println(\"Hello Arduino AngelScript!\"); pinMode(g_ledBuildIn, g_output); digitalWrite(g_ledBuildIn, g_high); delay(2000); digitalWrite(g_ledBuildIn, g_low); }";
   asIScriptModule* module = engine->GetModule(0, asGM_ALWAYS_CREATE);
 	r = module->AddScriptSection("script", angelScript.c_str(), angelScript.length());
   if (r < 0)
