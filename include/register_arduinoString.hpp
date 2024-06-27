@@ -179,7 +179,7 @@ void register_arduinoString(asIScriptEngine* io_engine)
   resultCode = io_engine->RegisterObjectBehaviour("String", asBEHAVE_CONSTRUCT, "void f()", asFUNCTION(constructor_arduinoString), asCALL_GENERIC); assert(resultCode >= 0);
   resultCode = io_engine->RegisterObjectBehaviour("String", asBEHAVE_CONSTRUCT,  "void f(const String& in)", asFUNCTION(copyConstructor_arduinoString), asCALL_GENERIC); assert(resultCode >= 0);
   resultCode = io_engine->RegisterObjectBehaviour("String", asBEHAVE_DESTRUCT, "void f()", asFUNCTION(destructor_arduinoString), asCALL_GENERIC); assert(resultCode >= 0);
-  resultCode = io_engine->RegisterObjectMethod("String", "String &opAssign(const String &in)", asFUNCTION(assign_arduinoString),    asCALL_GENERIC); assert(resultCode >= 0);
+  resultCode = io_engine->RegisterObjectMethod("String", "String &opAssign(const String &in)", asFUNCTION(assign_arduinoString), asCALL_GENERIC); assert(resultCode >= 0);
 	resultCode = io_engine->RegisterObjectMethod("String", "String &opAddAssign(const String &in)", asFUNCTION(addAssign_arduinoString), asCALL_GENERIC); assert(resultCode >= 0);
 
 	resultCode = io_engine->RegisterObjectMethod("String", "bool opEquals(const String &in) const", asFUNCTION(equals_arduinoString), asCALL_GENERIC); assert(resultCode >= 0);

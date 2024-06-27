@@ -1,9 +1,7 @@
 #pragma once
 
 #include <Arduino.h>
-
 #include <angelscript.h>
-
 #include <assert.h>
 
 uint8_t g_input = INPUT;

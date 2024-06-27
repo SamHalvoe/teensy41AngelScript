@@ -4,6 +4,7 @@
 
 #include "register_arduino.hpp"
 #include "register_arduinoString.hpp"
+#include "register_elapsedMillis.hpp"
 
 void MessageCallback(const asSMessageInfo *msg, void *param)
 {
@@ -19,6 +20,11 @@ void MessageCallback(const asSMessageInfo *msg, void *param)
 void serial_println(asIScriptGeneric* in_string)
 {
   Serial.println(*static_cast<String*>(in_string->GetArgAddress(0)));
+}
+
+void serial_println_uint(asIScriptGeneric* in_pointer)
+{
+  Serial.println(in_pointer->GetArgDWord(0));
 }
 
 void setup()
@@ -43,11 +49,14 @@ void setup()
 
 	register_arduino(engine);
 	register_arduinoString(engine);
+	asElapsedMillis::registerClass(engine);
 
   r = engine->RegisterGlobalFunction("void serial_println(const String& in)", asFUNCTION(serial_println), asCALL_GENERIC);
-  if (r < 0) { Serial.println("RegisterGlobalFunction() failed!"); }
+  if (r < 0) { Serial.println("RegisterGlobalFunction(serial_println) failed!"); }
+	r = engine->RegisterGlobalFunction("void serial_println_uint(uint)", asFUNCTION(serial_println_uint), asCALL_GENERIC);
+  if (r < 0) { Serial.println("RegisterGlobalFunction(serial_println_uint) failed!"); }
   
-  String angelScript = "void main() { serial_println(\"Hello Arduino AngelScript!\"); pinMode(g_ledBuildIn, g_output); digitalWrite(g_ledBuildIn, g_high); delay(2000); digitalWrite(g_ledBuildIn, g_low); }";
+  String angelScript = "void main() { ElapsedMillis time; serial_println(\"Hello Arduino AngelScript!\"); serial_println_uint(time); pinMode(g_ledBuildIn, g_output); digitalWrite(g_ledBuildIn, g_high); delay(2001); digitalWrite(g_ledBuildIn, g_low); serial_println_uint(time); }";
   asIScriptModule* module = engine->GetModule(0, asGM_ALWAYS_CREATE);
 	r = module->AddScriptSection("script", angelScript.c_str(), angelScript.length());
   if (r < 0)
