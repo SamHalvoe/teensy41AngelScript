@@ -16,7 +16,11 @@
 			"utility": "cpp",
 			"*.tcc": "cpp",
 			"deque": "cpp",
-			"vector": "cpp"
+			"vector": "cpp",
+			"functional": "cpp",
+			"compare": "cpp",
+			"tuple": "cpp",
+			"type_traits": "cpp"
 		},
 		"editor.tabSize": 2
 	}
