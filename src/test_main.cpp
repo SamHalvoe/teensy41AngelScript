@@ -47,9 +47,9 @@ void setup()
 		while (true) {}
   }
 
-	register_arduino(engine);
-	register_arduinoString(engine);
-	asElapsedMillis::registerClass(engine);
+	asArduino::registerArduino(engine);
+	asArduinoString::registerArduinoString(engine);
+	asElapsedMillis::registerElapsedMillis(engine);
 
   r = engine->RegisterGlobalFunction("void serial_println(const String& in)", asFUNCTION(serial_println), asCALL_GENERIC);
   if (r < 0) { Serial.println("RegisterGlobalFunction(serial_println) failed!"); }

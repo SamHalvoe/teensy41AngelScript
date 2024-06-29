@@ -36,7 +36,7 @@ namespace asElapsedMillis
     out_pointer->SetReturnDWord(value);
   }
 
-  void registerClass(asIScriptEngine* io_engine)
+  void registerElapsedMillis(asIScriptEngine* io_engine)
   {
     int resultCode = io_engine->RegisterObjectType("ElapsedMillis", sizeof(elapsedMillis), asOBJ_VALUE); assert( resultCode >= 0 );
     resultCode = io_engine->RegisterObjectBehaviour("ElapsedMillis", asBEHAVE_CONSTRUCT, "void f()", asFUNCTION(Constructor), asCALL_GENERIC); assert( resultCode >= 0 );
